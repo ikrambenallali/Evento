@@ -6,21 +6,19 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
-
 @Module({
   imports: [
-     
-   
-  
-    ConfigModule.forRoot({ isGlobal: true }), // lit automatiquement .env
+    ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGO_URI!, {
       connectionFactory: (connection) => {
         console.log('✅ MongoDB connected:', connection.name);
         return connection;
       },
-    }), UsersModule, AuthModule,
+    }),
+    UsersModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController], // ✅ UNIQUEMENT
+  providers: [AppService],       // ✅ UNIQUEMENT
 })
 export class AppModule {}
