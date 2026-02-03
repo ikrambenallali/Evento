@@ -12,5 +12,5 @@ export class RegisterDto {
   password: string;
 
   @IsNotEmpty()
-  role: 'ADMIN' | 'PARTICIPANT';
+  role: 'ADMIN' | 'PARTICIPANT' ;
 }
