@@ -46,11 +46,19 @@ create(
 findAll() {
   return this.eventsService.findAll();
 }
-@Get(':id')
+@Get(':id/details')
 eventDetails(@Req() req) {
   const id = req.params.id;
   return this.eventsService.eventDetails(id);
 }
+
+@Get(':id')
+findById(@Req() req) {
+  const id = req.params.id;
+  return this.eventsService.findById(id);
+}
+
+
 @Delete(':id')
 remove(@Req() req) {
   const id = req.params.id;
