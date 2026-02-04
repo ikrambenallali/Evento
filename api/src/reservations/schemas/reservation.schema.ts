@@ -21,6 +21,10 @@ export class Reservation extends Document {
 
   @Prop()
   canceledAt?: Date;
+
+  @Prop({ default: true })
+  active: boolean;
+
 }
 
 export const ReservationSchema =

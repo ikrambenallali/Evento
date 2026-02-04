@@ -1,26 +1,61 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTicketDto } from './dto/create-ticket.dto';
-import { UpdateTicketDto } from './dto/update-ticket.dto';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import PDFDocument from 'pdfkit';
+
+import { Reservation } from 'src/reservations/schemas/reservation.schema';
+import { ReservationStatus } from 'src/reservations/enums/reservation-status.enum';
 
 @Injectable()
 export class TicketsService {
-  create(createTicketDto: CreateTicketDto) {
-    return 'This action adds a new ticket';
-  }
+  constructor(
+    @InjectModel(Reservation.name)
+    private readonly reservationModel: Model<Reservation>,
+  ) {}
 
-  findAll() {
-    return `This action returns all tickets`;
-  }
+  async generateTicket(reservationId: string, user) {
+  const reservation = await this.reservationModel
+    .findById(reservationId)
+    .populate('event')
+    .populate('user');
 
-  findOne(id: number) {
-    return `This action returns a #${id} ticket`;
-  }
+  if (!reservation) throw new NotFoundException('Réservation introuvable');
+  if (reservation.status !== ReservationStatus.CONFIRMED)
+    throw new ForbiddenException('Ticket non disponible');
 
-  update(id: number, updateTicketDto: UpdateTicketDto) {
-    return `This action updates a #${id} ticket`;
-  }
+  if (!user) throw new ForbiddenException('Utilisateur non authentifié');
+  if (user.role !== 'ADMIN' && reservation.user._id.toString() !== user.id)
+    throw new ForbiddenException('Accès interdit');
 
-  remove(id: number) {
-    return `This action removes a #${id} ticket`;
-  }
+  return this.generatePdf(reservation);  // ← retourne la Promise
+}
+
+
+ generatePdf(reservation): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    const doc = new PDFDocument();
+    const buffers: Buffer[] = [];
+
+    doc.on('data', (chunk) => buffers.push(chunk));
+    doc.on('end', () => resolve(Buffer.concat(buffers)));
+    doc.on('error', (err) => reject(err));
+
+    doc.fontSize(18).text('🎫 Ticket de réservation');
+    doc.moveDown();
+
+    doc.text(`Participant: ${reservation.user.name}`);
+    doc.text(`Email: ${reservation.user.email}`);
+    doc.text(`Événement: ${reservation.event.title}`);
+    doc.text(`Date: ${reservation.event.date}`);
+    doc.text(`Lieu: ${reservation.event.location}`);
+    doc.text(`Confirmé le: ${reservation.confirmedAt}`);
+
+    doc.end();
+  });
+}
+
 }

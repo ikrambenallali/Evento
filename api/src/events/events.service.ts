@@ -54,4 +54,8 @@ export class EventsService {
       .findByIdAndUpdate(id, { status }, { new: true })
       .exec();
   }
+
+ async getAllEventsPublished() {
+    return this.eventModel.find({ status: 'PUBLISHED' }).exec();
+  }
 }
