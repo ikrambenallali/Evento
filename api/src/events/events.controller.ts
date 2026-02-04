@@ -6,6 +6,8 @@ import {
   UploadedFile,
   Req,
   Get,
+  Delete,
+  Put,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { EventsService } from './events.service';
@@ -15,6 +17,7 @@ import { eventImageStorage } from './multer.config';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from 'src/auth/decorators/user.decorator';
+import { UpdateEventDto } from './dto/update-event.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('events')
@@ -39,6 +42,32 @@ create(
 }
 
 
+@Get()
+findAll() {
+  return this.eventsService.findAll();
+}
+@Get(':id')
+eventDetails(@Req() req) {
+  const id = req.params.id;
+  return this.eventsService.eventDetails(id);
+}
+@Delete(':id')
+remove(@Req() req) {
+  const id = req.params.id;
+  return this.eventsService.remove(id);
+}
 
+@Put(':id')
+update(@Req() req, @Body() dto: UpdateEventDto) {
+  // console.log('DTO reçu:', dto);
+  const id = req.params.id;
+  return this.eventsService.update(id, dto);
+}
+
+@Put(':id/status')
+updateStatus(@Req() req, @Body('status') status: string) {
+  const id = req.params.id;
+  return this.eventsService.updateStatus(id, status);
+}
 
 }
