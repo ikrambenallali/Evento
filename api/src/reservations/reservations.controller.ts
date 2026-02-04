@@ -22,9 +22,7 @@ import { Role } from 'src/common/enums/role.enum';
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
 
-  // =========================
-  // PARTICIPANT
-  // =========================
+
   @Post()
   @Roles(Role.PARTICIPANT)
   create(@Request() req, @Body() dto: CreateReservationDto) {
@@ -43,9 +41,7 @@ export class ReservationsController {
     return this.reservationsService.cancelReservation(id, req.user.id);
   }
 
-  // =========================
-  // ADMIN
-  // =========================
+
   @Get()
   @Roles(Role.ADMIN)
   findAll() {
