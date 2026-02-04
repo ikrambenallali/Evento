@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { EventsModule } from './events/events.module';
+import { TicketsModule } from './tickets/tickets.module';
 
 @Module({
   imports: [
@@ -15,10 +17,15 @@ import { AuthModule } from './auth/auth.module';
         return connection;
       },
     }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     UsersModule,
     AuthModule,
+    EventsModule,
+    TicketsModule,
   ],
   controllers: [AppController], // ✅ UNIQUEMENT
   providers: [AppService],       // ✅ UNIQUEMENT
 })
-export class AppModule {}
+export class AppModule { }
