@@ -2,7 +2,7 @@
 // =============================================================================================================================
 // Valide JWT, remplit request.user
 // =============================================================================================================================
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
@@ -16,11 +16,18 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
-    return {
-      userId: payload.sub,
-      email: payload.email,
-      role: payload.role,
-    };
-  }
+ async validate(payload: any) {
+  console.log('🔑 JWT Payload reçu:', payload); // Debug
+    // ✅ VALIDATION : Vérifier que le payload contient les données nécessaires
+    if (!payload.sub) {
+      console.error('❌ JWT invalide : payload.sub est manquant');
+      throw new UnauthorizedException('Invalid token: missing user ID');
+    }
+  return {
+    id: payload.sub, 
+    email: payload.email,
+    role: payload.role,
+  };
+}
+
 }
