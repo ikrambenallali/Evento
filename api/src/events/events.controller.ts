@@ -18,8 +18,8 @@ import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from 'src/auth/decorators/user.decorator';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { Public } from 'src/auth/decorators/public.decorator';
 
-@UseGuards(JwtAuthGuard)
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
@@ -31,6 +31,8 @@ test(@Req() req) {
 }
 
 @Post()
+@UseGuards(JwtAuthGuard)
+
 @UseInterceptors(FileInterceptor('photo', { storage: eventImageStorage }))
 create(
   @UploadedFile() file: Express.Multer.File,
@@ -46,18 +48,35 @@ create(
 findAll() {
   return this.eventsService.findAll();
 }
-@Get(':id')
+@Get('published')
+
+getAllEventsPublished() {
+  return this.eventsService.getAllEventsPublished();
+}
+@Get(':id/details')
 eventDetails(@Req() req) {
   const id = req.params.id;
   return this.eventsService.eventDetails(id);
 }
+
+@Get(':id')
+findById(@Req() req) {
+  const id = req.params.id;
+  return this.eventsService.findById(id);
+}
+
+
 @Delete(':id')
+@UseGuards(JwtAuthGuard)
+
 remove(@Req() req) {
   const id = req.params.id;
   return this.eventsService.remove(id);
 }
 
 @Put(':id')
+@UseGuards(JwtAuthGuard)
+
 update(@Req() req, @Body() dto: UpdateEventDto) {
   // console.log('DTO reçu:', dto);
   const id = req.params.id;
@@ -65,9 +84,12 @@ update(@Req() req, @Body() dto: UpdateEventDto) {
 }
 
 @Put(':id/status')
+@UseGuards(JwtAuthGuard)
+
 updateStatus(@Req() req, @Body('status') status: string) {
   const id = req.params.id;
   return this.eventsService.updateStatus(id, status);
 }
+
 
 }
