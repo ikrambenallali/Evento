@@ -49,7 +49,7 @@ export class ReservationsController {
   }
 
   @Patch(':id/status')
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN )
   updateStatus(
     @Param('id') id: string,
     @Body() dto: UpdateReservationStatusDto,
