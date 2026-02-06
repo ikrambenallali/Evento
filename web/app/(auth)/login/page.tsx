@@ -7,6 +7,8 @@ import { RootState } from '../../features/store';
 import api from '../../lib/axios';
 import Link from 'next/link';
 import { Playfair_Display, Cinzel } from 'next/font/google';
+import {jwtDecode} from 'jwt-decode';
+
 
 // Configuration des polices classiques
 const playfairDisplay = Playfair_Display({
@@ -30,31 +32,43 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch(loginStart());
+  e.preventDefault();
+  dispatch(loginStart());
 
-    try {
-      const response = await api.post('/auth/login', {
-        email,
-        password,
-      });
+  try {
+    const response = await api.post('/auth/login', {
+      email,
+      password,
+    });
 
-      dispatch(
-        loginSuccess({
-          user: { email },
-          token: response.data.access_token,
-        })
-      );
+    const token = response.data.access_token;
+    const decoded: any = jwtDecode(token);
 
-      localStorage.setItem('token', response.data.access_token);
-    } catch (err: any) {
-      dispatch(
-        loginFailure(
-          err.response?.data?.message || 'Email ou mot de passe incorrect'
-        )
-      );
-    }
-  };
+    const user = {
+      id: decoded.sub,
+      email: decoded.email,
+      role: decoded.role,
+    };
+
+    dispatch(
+      loginSuccess({
+        user,
+        token,
+      })
+    );
+
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+
+  } catch (err: any) {
+    dispatch(
+      loginFailure(
+        err.response?.data?.message || 'Email ou mot de passe incorrect'
+      )
+    );
+  }
+};
+
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
