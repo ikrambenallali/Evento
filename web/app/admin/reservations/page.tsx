@@ -11,6 +11,7 @@ import { ReservationStatus } from '@/app/types/ReservationStatus';
 import { Playfair_Display, Cinzel } from 'next/font/google';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
+import ProtectedRoute from '@/app/components/ProtectedRoute';
 
 // Configuration des polices classiques
 const playfairDisplay = Playfair_Display({
@@ -61,7 +62,8 @@ export default function AdminReservationsPage() {
 
     return (
         <>
-         
+                 <ProtectedRoute requireAdmin>
+
 
             <div className="relative min-h-screen w-full overflow-hidden ">
                 {/* Background avec dégradé inspiré du palais */}
@@ -244,6 +246,8 @@ export default function AdminReservationsPage() {
                     </div>
                 </div>
             </div>
+                </ProtectedRoute>
+
         </>
     );
 }

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Playfair_Display, Cinzel } from 'next/font/google';
 import Link from 'next/link';
 import Navbar from '../../../components/Navbar';
+import ProtectedRoute from '@/app/components/ProtectedRoute';
 
 // Configuration des polices classiques
 const playfairDisplay = Playfair_Display({
@@ -46,6 +47,8 @@ export default function CreateEventPage() {
 
   return (
     <>
+            <ProtectedRoute requireAdmin>
+    
       <div className="relative min-h-screen w-full overflow-hidden">
         {/* Background avec dégradé inspiré du palais */}
         <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-amber-900 to-orange-950">
@@ -250,6 +253,8 @@ export default function CreateEventPage() {
           </div>
         </div>
       </div>
+          </ProtectedRoute>
+
     </>
   );
 }

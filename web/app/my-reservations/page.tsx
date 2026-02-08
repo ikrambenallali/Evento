@@ -7,6 +7,7 @@ import { getMyReservations, cancelReservation } from '../lib/api';
 import Link from 'next/link';
 import { Playfair_Display, Cinzel } from 'next/font/google';
 import { Reservation } from '../types/Reservation';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 const playfairDisplay = Playfair_Display({
     subsets: ['latin'],
@@ -115,6 +116,9 @@ export default function MyReservationsPage() {
     };
 
     return (
+        
+            <ProtectedRoute>
+
         <div className="relative min-h-screen w-full overflow-hidden">
             {/* Background avec dégradé inspiré du palais */}
             <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-amber-900 to-orange-950">
@@ -326,5 +330,7 @@ export default function MyReservationsPage() {
                 </main>
             </div>
         </div>
+            </ProtectedRoute>
+
     );
 }

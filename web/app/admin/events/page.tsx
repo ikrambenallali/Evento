@@ -8,6 +8,7 @@ import { EventStatus } from '@/app/types/EventStatus';
 import { IEvent } from '@/app/types/event';
 import { Playfair_Display, Cinzel } from 'next/font/google';
 import Link from 'next/link';
+import ProtectedRoute from '@/app/components/ProtectedRoute';
 
 
 // Configuration des polices classiques
@@ -51,6 +52,7 @@ export default function AdminEventsPage() {
 
     return (
         <>
+    <ProtectedRoute requireAdmin>
 
             <div className="relative min-h-screen w-full overflow-hidden " >
                 {/* Background avec dégradé inspiré du palais */}
@@ -209,6 +211,8 @@ export default function AdminEventsPage() {
                     </div>
                 </div>
             </div>
+                </ProtectedRoute>
+
         </>
     );
 }
