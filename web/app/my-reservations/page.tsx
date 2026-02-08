@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import DownloadTicketButton from '../components/DownloadTicketButton';
+import { getMyReservations, cancelReservation } from '../lib/api';
+
 import Link from 'next/link';
 import { Playfair_Display, Cinzel } from 'next/font/google';
+import { Reservation } from '../types/Reservation';
 
 const playfairDisplay = Playfair_Display({
     subsets: ['latin'],
@@ -18,23 +21,25 @@ const cinzel = Cinzel({
 });
 
 export default function MyReservationsPage() {
-    const [reservations, setReservations] = useState([]);
+    const [reservations, setReservations] = useState<Reservation[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const loadReservations = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/reservations/me`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
+                const data = await getMyReservations(token);
                 setReservations(data);
+            } catch (error) {
+                console.error(error);
+            } finally {
                 setLoading(false);
-            })
-            .catch(() => setLoading(false));
+            }
+        };
+
+        loadReservations();
     }, []);
 
     const getStatusBadge = (status: string) => {
@@ -86,29 +91,29 @@ export default function MyReservationsPage() {
                 );
         }
     };
-    const cancelReservation = async (reservationId: string) => {
-        const token = localStorage.getItem('token');
+    const handleCancelReservation = async (reservationId: string) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
 
-        const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/reservations/${reservationId}/cancel`,
-            {
-                method: 'PATCH',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
+            await cancelReservation(reservationId, token);
 
-        if (!res.ok) {
-            const data = await res.json();
-            alert(`Impossible d'annuler: ${data.message}`);
-            return;
+            alert('Réservation annulée avec succès !');
+
+            // Mise à jour locale (meilleure UX)
+            setReservations((prev: any[]) =>
+                prev.map((r) =>
+                    r._id === reservationId ? { ...r, status: 'CANCELLED' } : r
+                )
+            );
+        } catch (error: any) {
+            alert(
+                error?.response?.data?.message ||
+                "Impossible d'annuler la réservation"
+            );
         }
-
-        alert('Réservation annulée avec succès !');
-        window.location.reload(); // recharge pour mettre à jour la liste
     };
+
     return (
         <div className="relative min-h-screen w-full overflow-hidden">
             {/* Background avec dégradé inspiré du palais */}
@@ -233,7 +238,7 @@ export default function MyReservationsPage() {
                                                 <h2
                                                     className={`text-xl font-semibold text-orange-100 ${cinzel.className}`}
                                                 >
-                                                    {r.event.title}
+                                                    {r.event?.title ?? 'Événement supprimé'}
                                                 </h2>
                                                 {getStatusBadge(r.status)}
                                             </div>
@@ -262,7 +267,7 @@ export default function MyReservationsPage() {
                                                         />
                                                     </svg>
                                                     <p className="text-sm text-orange-100/70">
-                                                        {r.event.location}
+                                                        {r.event?.location ?? 'Événement supprimé'}
                                                     </p>
                                                 </div>
 
@@ -282,11 +287,14 @@ export default function MyReservationsPage() {
                                                         />
                                                     </svg>
                                                     <p className="text-sm text-orange-100/70">
-                                                        {new Date(r.event.date).toLocaleDateString('fr-FR', {
-                                                            day: 'numeric',
-                                                            month: 'long',
-                                                            year: 'numeric',
-                                                        })}
+                                                        {r.event?.date
+                                                            ? new Date(r.event.date).toLocaleDateString('fr-FR', {
+                                                                day: 'numeric',
+                                                                month: 'long',
+                                                                year: 'numeric',
+                                                            })
+                                                            : '—'}
+
                                                     </p>
                                                 </div>
 
@@ -299,11 +307,12 @@ export default function MyReservationsPage() {
                                                 )}
                                                 {r.status !== 'CANCELED' && (
                                                     <button
-                                                        onClick={() => cancelReservation(r._id)}
-                                                        className="bg-orange-200 text-amber-950 px-3 py-0 rounded "
+                                                        onClick={() => handleCancelReservation(r._id)}
+                                                        className="bg-orange-200 text-amber-950 px-3 py-0 rounded"
                                                     >
                                                         Annuler
                                                     </button>
+
                                                 )}
                                             </div>
 

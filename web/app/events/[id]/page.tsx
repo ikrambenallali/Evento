@@ -28,7 +28,7 @@ export default async function EventDetailsPage({ params }: Props) {
 
   return (
     <>
-            <Navbar />
+          
     
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Background avec dégradé inspiré du palais */}
