@@ -22,13 +22,9 @@
         "name": "next"
       }
     ],
-    "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@shared/*": [
-        "shared/*"
-      ]
+    "baseUrl": ".",
+     "paths": {
+      "@/*": ["./*"]
     }
   },
   "include": [

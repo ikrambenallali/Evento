@@ -1,6 +1,7 @@
-export type EventStatus = 'DRAFT' | 'PUBLISHED' | 'CANCELED';
+import { EventStatus } from "./EventStatus";
 
-export interface Event {
+export interface IEvent {
+  
   _id: string;
   title: string;
   description: string;
@@ -11,3 +12,4 @@ export interface Event {
   photoUrl?: string;
   createdBy: string;
 }
+

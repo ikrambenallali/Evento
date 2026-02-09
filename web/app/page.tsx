@@ -18,7 +18,6 @@ const cinzel = Cinzel({
 export default function WelcomePage() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
-            <Navbar />
 
       {/* Background Image with Opacity */}
       <div className="absolute inset-0 z-0">

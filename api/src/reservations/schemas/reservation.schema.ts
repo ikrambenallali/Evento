@@ -11,6 +11,7 @@ export class Reservation extends Document {
   event: Types.ObjectId;
 
   @Prop({
+    type: String,    
     enum: ReservationStatus,
     default: ReservationStatus.PENDING,
   })

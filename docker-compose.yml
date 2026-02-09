@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: evento-backend
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+    command: npm run start:dev
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: evento-frontend
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:6
+    container_name: evento-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

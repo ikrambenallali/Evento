@@ -16,9 +16,8 @@ import { eventImageStorage } from './multer.config';
 
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { User } from 'src/auth/decorators/user.decorator';
+import { User } from '../auth/decorators/user.decorator';
 import { UpdateEventDto } from './dto/update-event.dto';
-import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('events')
 export class EventsController {

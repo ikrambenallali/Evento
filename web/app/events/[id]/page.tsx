@@ -2,6 +2,8 @@ import { getEventById } from '../../lib/api';
 import Link from 'next/link';
 import { Playfair_Display, Cinzel } from 'next/font/google';
 import Navbar from '@/app/components/Navbar';
+import ReserveButton from '../../components/ReserveButton';
+
 
 // Configuration des polices classiques
 const playfairDisplay = Playfair_Display({
@@ -26,7 +28,7 @@ export default async function EventDetailsPage({ params }: Props) {
 
   return (
     <>
-            <Navbar />
+          
     
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Background avec dégradé inspiré du palais */}
@@ -190,7 +192,8 @@ export default async function EventDetailsPage({ params }: Props) {
 
                 {/* Action Button */}
                 <div className="mt-8 flex justify-center">
-                  <button
+                  {/* <button
+                  
                     className={`px-8 py-3 bg-orange-200 text-amber-950 rounded-full font-light 
                              hover:bg-orange-300 transition-all duration-300 
                              shadow-lg hover:shadow-orange-300/40
@@ -198,7 +201,10 @@ export default async function EventDetailsPage({ params }: Props) {
                     style={{ letterSpacing: '0.2em' }}
                   >
                     RÉSERVER
-                  </button>
+                    
+                  </button> */}
+                  <ReserveButton eventId={event._id} />
+
                 </div>
               </div>
             </div>
