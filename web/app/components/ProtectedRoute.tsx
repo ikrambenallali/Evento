@@ -3,7 +3,7 @@
 import { ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/features/store';
+import { RootState } from '../features/store';
 
 interface ProtectedRouteProps {
   children: ReactNode;

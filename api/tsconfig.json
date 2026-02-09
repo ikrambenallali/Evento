@@ -17,6 +17,7 @@
      "paths": {
       "@shared/*": ["shared/*"]
     },
+    
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
