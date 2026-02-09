@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolvePackageJsonExports": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "isolatedModules": true,
     "declaration": true,
@@ -14,10 +13,10 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-     "paths": {
+    "paths": {
+      "src/*": ["src/*"],
       "@shared/*": ["shared/*"]
     },
-    
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,

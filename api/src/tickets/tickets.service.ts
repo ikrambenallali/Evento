@@ -7,8 +7,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import PDFDocument from 'pdfkit';
 
-import { Reservation } from 'src/reservations/schemas/reservation.schema';
-import { ReservationStatus } from 'src/reservations/enums/reservation-status.enum';
+import { Reservation } from '../reservations/schemas/reservation.schema';
+import { ReservationStatus } from '../reservations/enums/reservation-status.enum';
 
 @Injectable()
 export class TicketsService {

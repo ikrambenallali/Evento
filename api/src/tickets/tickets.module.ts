@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { TicketsController } from './tickets.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Reservation, ReservationSchema } from 'src/reservations/schemas/reservation.schema';
+import { Reservation, ReservationSchema } from '../reservations/schemas/reservation.schema';
 
 @Module({
   imports: [

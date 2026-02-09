@@ -3,7 +3,7 @@ import type { Response } from 'express';
 import { TicketsService } from './tickets.service';
 
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('tickets')
 @UseGuards(JwtAuthGuard)  // <<< important
