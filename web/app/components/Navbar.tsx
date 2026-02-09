@@ -16,13 +16,6 @@ export default function Navbar() {
     const user = useSelector((state: RootState) => state.auth.user);
     const token = useSelector((state: RootState) => state.auth.token);
     const Router = useRouter();
-    // useEffect(() => {
-    //     const token = localStorage.getItem('token');
-    //     const user = localStorage.getItem('user');
-    //     if (token && user) {
-    //         dispatch(loginSuccess({ token, user: JSON.parse(user) }));
-    //     }
-    // }, [dispatch]);
 
     const handleLogout = () => {
         dispatch(logout());
@@ -30,8 +23,6 @@ export default function Navbar() {
         localStorage.removeItem('user');
         Router.push('/events');
     };
-
-    console.log('User:', user, 'Token:', token); // pour debug
 
     return (
 <nav className="sticky fixed top-0 right-0 w-full flex justify-end p-2 z-50 bg-orange-200">
