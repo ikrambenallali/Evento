@@ -21,6 +21,7 @@ const cinzel = Cinzel({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
 });
+console.log('api url', process.env.NEXT_PUBLIC_API_URL);
 
 export default function RegisterPage() {
   const dispatch = useDispatch();

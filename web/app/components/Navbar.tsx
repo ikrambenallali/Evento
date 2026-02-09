@@ -5,13 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../features/store';
 import { logout } from '../features/authSlice';
 import { Cinzel } from 'next/font/google';
-import { useEffect } from 'react';
 import { loginSuccess } from '../features/authSlice';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600', '700'], display: 'swap' });
 
 export default function Navbar() {
+
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.auth.user);
     const token = useSelector((state: RootState) => state.auth.token);
@@ -23,9 +24,15 @@ export default function Navbar() {
         localStorage.removeItem('user');
         Router.push('/events');
     };
+    const [mounted, setMounted] = useState(false);
 
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null;
     return (
-<nav className="sticky fixed top-0 right-0 w-full flex justify-end p-2 z-50 bg-orange-200">
+        <nav className="sticky fixed top-0 right-0 w-full flex justify-end p-2 z-50 bg-orange-200">
             <div className="flex gap-4 md:gap-6">
                 {!user ? (
                     <>

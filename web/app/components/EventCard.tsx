@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Event } from '../types/event';
+import { IEvent } from '../types/event';
 import { Cinzel } from 'next/font/google';
 
 const cinzel = Cinzel({
@@ -8,7 +8,7 @@ const cinzel = Cinzel({
   display: 'swap',
 });
 
-export default function EventCard({ event }: { event: Event }) {
+export default function EventCard({ event }: { event: IEvent }) {
   return (
     <div className="group bg-gradient-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border border-orange-200/30 rounded-xl shadow-lg overflow-hidden hover:border-orange-200/50 transition-all duration-300 hover:shadow-orange-200/10 hover:scale-[1.02]">
       {/* Image - Plus petite */}
