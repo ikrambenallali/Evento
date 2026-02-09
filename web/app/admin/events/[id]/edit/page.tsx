@@ -60,7 +60,6 @@ export default function EditEventPage() {
 
   return (
     <>
-        {/* <ProtectedRoute requireAdmin> */}
     
       <div className="relative min-h-screen w-full overflow-hidden">
         {/* Background avec dégradé inspiré du palais */}
@@ -312,7 +311,6 @@ export default function EditEventPage() {
           </div>
         </div>
       </div>
-          {/* </ProtectedRoute> */}
 
     </>
   );

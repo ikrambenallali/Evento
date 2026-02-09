@@ -7,28 +7,28 @@ import { RootState } from '../features/store';
 
 interface ProtectedRouteProps {
   children: ReactNode;
-  requireAdmin?: boolean;
+  allowedRoles?: ('ADMIN' | 'PARTICIPANT')[];
 }
 
 export default function ProtectedRoute({
   children,
-  requireAdmin = false,
+  allowedRoles = ['ADMIN', 'PARTICIPANT'], // par défaut tout le monde peut accéder
 }: ProtectedRouteProps) {
   const router = useRouter();
-
   const { user, loading } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (!loading) {
       if (!user) {
+        // Utilisateur non connecté
         router.replace('/login');
-      } else if (requireAdmin && user.role !== 'admin') {
-        router.replace('/events');
+      } else if (!allowedRoles.includes(user.role)) {
+        // Utilisateur connecté mais rôle non autorisé
+        router.replace('/events'); // Redirection générique pour rôle non autorisé
       }
     }
-  }, [user, loading, requireAdmin, router]);
+  }, [user, loading, allowedRoles, router]);
 
-  // ⏳ Pendant la récupération Redux
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -37,11 +37,7 @@ export default function ProtectedRoute({
     );
   }
 
-  // 🚫 Accès refusé
-  if (!user || (requireAdmin && user.role !== 'admin')) {
-    return null;
-  }
+  if (!user || !allowedRoles.includes(user.role)) return null;
 
-  // ✅ Accès autorisé
   return <>{children}</>;
 }

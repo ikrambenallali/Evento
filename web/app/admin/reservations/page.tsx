@@ -62,7 +62,6 @@ export default function AdminReservationsPage() {
 
     return (
         <>
-                 {/* <ProtectedRoute requireAdmin> */}
 
 
             <div className="relative min-h-screen w-full overflow-hidden ">
@@ -246,7 +245,6 @@ export default function AdminReservationsPage() {
                     </div>
                 </div>
             </div>
-                {/* </ProtectedRoute> */}
 
         </>
     );

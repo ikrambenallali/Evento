@@ -117,7 +117,6 @@ export default function MyReservationsPage() {
 
     return (
         
-            // <ProtectedRoute>
 
         <div className="relative min-h-screen w-full overflow-hidden">
             {/* Background avec dégradé inspiré du palais */}
@@ -330,7 +329,6 @@ export default function MyReservationsPage() {
                 </main>
             </div>
         </div>
-            // </ProtectedRoute>
 
     );
 }
