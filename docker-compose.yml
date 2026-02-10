@@ -25,15 +25,11 @@ services:
       dockerfile: Dockerfile
     container_name: evento-frontend
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:3000
-      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://backend:3000
+      - NODE_ENV=production
       - PORT=3000
     ports:
       - "3001:3000"
-    volumes:
-      - ./web:/app
-      - /app/node_modules
-    command: npm run dev --webpack
     depends_on:
       - backend
     networks:

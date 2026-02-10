@@ -2,7 +2,7 @@ import { getPublishedEvents } from '../lib/api';
 import EventCard from '../components/EventCard';
 import { Playfair_Display, Cinzel } from 'next/font/google';
 import Link from 'next/link';
-import Navbar from '../components/Navbar';
+import { IEvent } from '../types/event';
 
 // Configuration des polices classiques
 const playfairDisplay = Playfair_Display({
@@ -18,11 +18,40 @@ const cinzel = Cinzel({
 });
 
 export default async function EventsPage() {
-  const events = await getPublishedEvents();
+  let events: IEvent[] = [];
+
+  try {
+    events = await getPublishedEvents() || [];
+  } catch (error) {
+    console.error('Erreur lors de la récupération des événements :', error);
+  }
+
+  if (!events || events.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-amber-950">
+        <div className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-xl p-8 max-w-md text-center">
+          <svg
+            className="w-12 h-12 text-orange-200/50 mx-auto mb-3"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+          <p className={`text-orange-100/80 ${cinzel.className}`} style={{ letterSpacing: '0.1em' }}>
+            Aucun événement disponible
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
-
       <div className="relative min-h-screen w-full overflow-hidden">
         {/* Background avec dégradé inspiré du palais */}
         <div className="absolute inset-0 bg-linear-to-br from-amber-950 via-amber-900 to-orange-950">

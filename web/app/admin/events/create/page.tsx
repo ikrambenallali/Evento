@@ -24,7 +24,7 @@ const cinzel = Cinzel({
 export default function CreateEventPage() {
   const token = useSelector((state: any) => state.auth.token);
   const router = useRouter();
-  const [form, setForm] = useState({ title: '', description: '', date: '', location: '', capacity: '' });
+  const [form, setForm] = useState({ title: '', description: '', date: '', location: '', capacity: 0 });
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>('');
 
@@ -37,11 +37,24 @@ export default function CreateEventPage() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const formData = new FormData();
-    Object.entries(form).forEach(([key, value]) => formData.append(key, value));
-    if (file) formData.append('photo', file);
 
-    await createEvent(formData, token);
+    const payload = {
+      title: form.title,
+      description: form.description,
+      date: form.date,
+      location: form.location,
+      capacity: Number(form.capacity),
+    };
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('payload', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+      formData.append('photo', file);
+      await createEvent(formData, token);
+    } else {
+      await createEvent(payload, token);
+    }
+
     router.push('/admin/events');
   };
 
@@ -155,10 +168,9 @@ export default function CreateEventPage() {
                         type="number"
                         placeholder="Nombre de places"
                         value={form.capacity}
-                        onChange={e => setForm({ ...form, capacity: e.target.value })}
+                        onChange={e => setForm({ ...form, capacity: Number(e.target.value) })}
                         required
                         min="1"
-                        className="w-full px-4 py-3 bg-amber-950/50 border border-orange-200/30 rounded-lg text-orange-100 placeholder-orange-100/40 focus:outline-none focus:border-orange-200/60 focus:ring-2 focus:ring-orange-200/20 transition-all"
                       />
                     </div>
                   </div>

@@ -39,11 +39,20 @@ export const getAllEventsAdmin = async (token: string): Promise<IEvent[]> => {
   return res.data;
 };
 
-export const createEvent = async (formData: FormData, token: string) => {
-  const res = await api.post('/events', formData, {
+export const createEvent = async (payload: FormData | Record<string, any>, token: string) => {
+  if (payload instanceof FormData) {
+    const res = await api.post('/events', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  }
+
+  const res = await api.post('/events', payload, {
     headers: {
       Authorization: `Bearer ${token}`,
-      // ❌ ne mets PAS Content-Type avec FormData
+      'Content-Type': 'application/json',
     },
   });
   return res.data;
@@ -65,13 +74,23 @@ export const updateEventStatus = async (
   );
   return res.data;
 };
-export const updateEvent = async (id: string, formData: FormData, token: string) => {
-    const res = await api.put(`/events/${id}`, formData, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+export const updateEvent = async (id: string, payload: FormData | Record<string, any>, token: string) => {
+  if (payload instanceof FormData) {
+    const res = await api.put(`/events/${id}`, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.data;
+  }
+
+  const res = await api.put(`/events/${id}`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  return res.data;
 };
 
 export const deleteEvent = async (id: string, token: string) => {
