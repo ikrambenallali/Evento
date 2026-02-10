@@ -16,6 +16,7 @@
         date: Date;
 
         @Prop({ required: true })
+        
         location: string;
 
         @Prop({ required: false })

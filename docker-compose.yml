@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   backend:
     build:
@@ -9,27 +7,37 @@ services:
     ports:
       - "3000:3000"
     environment:
-      NODE_ENV: development
+      - MONGO_URI=mongodb://mongo:27017/evento
+      - JWT_SECRET=secret
+      - NODE_ENV=development
     volumes:
       - ./api:/app
       - /app/node_modules
     command: npm run start:dev
     depends_on:
       - mongo
+    networks:
+      - default
 
   frontend:
     build:
       context: ./web
       dockerfile: Dockerfile
     container_name: evento-frontend
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3000
+      - NODE_ENV=development
+      - PORT=3000
     ports:
       - "3001:3000"
     volumes:
       - ./web:/app
       - /app/node_modules
-    command: npm run dev
+    command: npm run dev --webpack
     depends_on:
       - backend
+    networks:
+      - default
 
   mongo:
     image: mongo:6
@@ -38,6 +46,12 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - default
 
 volumes:
   mongo-data:
+
+networks:
+  default:
+    driver: bridge

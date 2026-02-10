@@ -21,6 +21,7 @@ const cinzel = Cinzel({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
 });
+console.log('api url', process.env.NEXT_PUBLIC_API_URL);
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
@@ -75,14 +76,14 @@ export default function RegisterPage() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Background avec dégradé inspiré du palais */}
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-amber-900 to-orange-950">
+      <div className="absolute inset-0 bg-linear-to-br from-amber-950 via-amber-900 to-orange-950">
         {/* Motifs décoratifs subtils */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-96 h-96 bg-orange-300 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-400 rounded-full blur-3xl"></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-orange-200 rounded-full blur-3xl"></div>
         </div>
-        
+
         {/* Texture overlay */}
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
@@ -100,13 +101,13 @@ export default function RegisterPage() {
                 𝓔𝓥𝓔𝓝𝓣𝓞
               </h1>
             </Link>
-           
+
           </div>
 
           {/* Form Card */}
           <form
             onSubmit={handleRegister}
-            className="bg-gradient-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-2xl shadow-2xl p-8 sm:p-10"
+            className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-2xl shadow-2xl p-8 sm:p-10"
           >
             {/* Name Field */}
             <div className="mb-5">
@@ -269,7 +270,7 @@ export default function RegisterPage() {
           </form>
 
           {/* Back to Home */}
-         
+
         </div>
       </div>
     </div>

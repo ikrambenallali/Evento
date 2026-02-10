@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Event } from '../types/event';
+import { IEvent } from '../types/event';
 import { Cinzel } from 'next/font/google';
 
 const cinzel = Cinzel({
@@ -8,9 +8,9 @@ const cinzel = Cinzel({
   display: 'swap',
 });
 
-export default function EventCard({ event }: { event: Event }) {
+export default function EventCard({ event }: { event: IEvent }) {
   return (
-    <div className="group bg-gradient-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border border-orange-200/30 rounded-xl shadow-lg overflow-hidden hover:border-orange-200/50 transition-all duration-300 hover:shadow-orange-200/10 hover:scale-[1.02]">
+    <div className="group bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border border-orange-200/30 rounded-xl shadow-lg overflow-hidden hover:border-orange-200/50 transition-all duration-300 hover:shadow-orange-200/10 hover:scale-[1.02]">
       {/* Image - Plus petite */}
       {event.photoUrl && (
         <div className="relative h-40 overflow-hidden">
@@ -19,8 +19,8 @@ export default function EventCard({ event }: { event: Event }) {
             alt={event.title}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
-          {/* Overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-amber-950/60 via-transparent to-transparent"></div>
+          {/* Overlay linear */}
+          <div className="absolute inset-0 bg-linear-to-t from-amber-950/60 via-transparent to-transparent"></div>
         </div>
       )}
 
@@ -36,13 +36,13 @@ export default function EventCard({ event }: { event: Event }) {
         {/* Location */}
         <div className="flex items-center gap-1.5 mb-2">
           <svg
-            className="w-3.5 h-3.5 text-orange-200/60 flex-shrink-0"
+            className="w-3.5 h-3.5 text-orange-200/60 shrink-0"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
             <path
-              strokeLinecap="round"
+              strokeLinecap="round"   
               strokeLinejoin="round"
               strokeWidth={2}
               d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"

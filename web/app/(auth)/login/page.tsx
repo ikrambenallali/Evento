@@ -24,6 +24,7 @@ const cinzel = Cinzel({
     weight: ['400', '500', '600', '700'],
     display: 'swap',
 });
+console.log("api url : ", process.env.NEXT_PUBLIC_API_URL);
 
 export default function LoginPage() {
     const dispatch = useDispatch();
@@ -77,7 +78,7 @@ export default function LoginPage() {
     return (
         <div className="relative min-h-screen w-full overflow-hidden">
             {/* Background avec dégradé inspiré du palais */}
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-amber-900 to-orange-950">
+            <div className="absolute inset-0 bg-linear-to-br from-amber-950 via-amber-900 to-orange-950">
                 {/* Motifs décoratifs subtils */}
                 <div className="absolute inset-0 opacity-10">
                     <div className="absolute top-0 left-0 w-96 h-96 bg-orange-300 rounded-full blur-3xl"></div>
@@ -108,7 +109,7 @@ export default function LoginPage() {
                     {/* Form Card */}
                     <form
                         onSubmit={handleLogin}
-                        className="bg-gradient-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-2xl shadow-2xl p-8 sm:p-10"
+                        className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-2xl shadow-2xl p-8 sm:p-10"
                     >
                         {/* Email Field */}
                         <div className="mb-6">
