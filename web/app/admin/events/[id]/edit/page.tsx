@@ -8,6 +8,7 @@ import { Playfair_Display, Cinzel } from 'next/font/google';
 import Link from 'next/link';
 import Navbar from '../../../../components/Navbar';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
+import { EventStatus } from '@/app/types/EventStatus';
 
 // Configuration des polices classiques
 const playfairDisplay = Playfair_Display({
@@ -47,7 +48,7 @@ export default function EditEventPage() {
   };
 
   const handleStatus = async (status: string) => {
-    await updateEventStatus(id, status, token);
+    await updateEventStatus(id, status as EventStatus, token);
     getEventById(id).then(setForm);
   };
 
@@ -217,10 +218,10 @@ export default function EditEventPage() {
                       </label>
                       <div className="flex items-center gap-2">
                         <span className={`inline-block px-4 py-2 rounded-full text-sm ${cinzel.className} ${form.status === 'PUBLISHED'
-                            ? 'bg-amber-700/50 text-amber-100 border border-amber-200/40'
-                            : form.status === 'CANCELED'
-                              ? 'bg-orange-900/50 text-orange-100 border border-orange-200/40'
-                              : 'bg-amber-900/40 text-amber-200 border border-amber-200/30'
+                          ? 'bg-amber-700/50 text-amber-100 border border-amber-200/40'
+                          : form.status === 'CANCELED'
+                            ? 'bg-orange-900/50 text-orange-100 border border-orange-200/40'
+                            : 'bg-amber-900/40 text-amber-200 border border-amber-200/30'
                           }`}>
                           {form.status || 'DRAFT'}
                         </span>
