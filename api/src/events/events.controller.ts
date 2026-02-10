@@ -21,74 +21,73 @@ import { UpdateEventDto } from './dto/update-event.dto';
 
 @Controller('events')
 export class EventsController {
-  constructor(private readonly eventsService: EventsService) {}
+  constructor(private readonly eventsService: EventsService) { }
 
-@Get('me-test')
-test(@Req() req) {
-  console.log('👤 User dans request:', req.user); // Debug
-  return req.user;
-}
+  @Get('me-test')
+  test(@Req() req) {
+    console.log('👤 User dans request:', req.user); // Debug
+    return req.user;
+  }
 
-@Post()
-@UseGuards(JwtAuthGuard)
+  @Post()
+  @UseGuards(JwtAuthGuard)
 
-@UseInterceptors(FileInterceptor('photo', { storage: eventImageStorage }))
-create(
-  @UploadedFile() file: Express.Multer.File,
-  @Body() dto: CreateEventDto,
-  @User('id') userId: string, // récupère l'id depuis le decorator
-) {
-  const photoUrl = file ? `/uploads/events/${file.filename}` : undefined;
-  return this.eventsService.create({ ...dto, photoUrl }, userId);
-}
-
-
-@Get()
-findAll() {
-  return this.eventsService.findAll();
-}
-@Get('published')
-
-getAllEventsPublished() {
-  return this.eventsService.getAllEventsPublished();
-}
-@Get(':id/details')
-eventDetails(@Req() req) {
-  const id = req.params.id;
-  return this.eventsService.eventDetails(id);
-}
-
-@Get(':id')
-findById(@Req() req) {
-  const id = req.params.id;
-  return this.eventsService.findById(id);
-}
+  @UseInterceptors(FileInterceptor('photo', { storage: eventImageStorage }))
+  create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() dto: CreateEventDto,
+    @User('id') userId: string, // récupère l'id depuis le decorator
+  ) {
+    const photoUrl = file ? `/uploads/events/${file.filename}` : undefined;
+    return this.eventsService.create({ ...dto, photoUrl }, userId);
+  }
 
 
-@Delete(':id')
-@UseGuards(JwtAuthGuard)
+  @Get()
+  findAll() {
+    return this.eventsService.findAll();
+  }
+  @Get('published')
 
-remove(@Req() req) {
-  const id = req.params.id;
-  return this.eventsService.remove(id);
-}
+  getAllEventsPublished() {
+    return this.eventsService.getAllEventsPublished();
+  }
+  @Get(':id/details')
+  eventDetails(@Req() req) {
+    const id = req.params.id;
+    return this.eventsService.eventDetails(id);
+  }
 
-@Put(':id')
-@UseGuards(JwtAuthGuard)
+  @Get(':id')
+  findById(@Req() req) {
+    const id = req.params.id;
+    return this.eventsService.findById(id);
+  }
 
-update(@Req() req, @Body() dto: UpdateEventDto) {
-  // console.log('DTO reçu:', dto);
-  const id = req.params.id;
-  return this.eventsService.update(id, dto);
-}
 
-@Put(':id/status')
-@UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
 
-updateStatus(@Req() req, @Body('status') status: string) {
-  const id = req.params.id;
-  return this.eventsService.updateStatus(id, status);
-}
+  remove(@Req() req) {
+    const id = req.params.id;
+    return this.eventsService.remove(id);
+  }
+
+  @Put(':id')
+  @UseGuards(JwtAuthGuard)
+
+  update(@Req() req, @Body() dto: UpdateEventDto) {
+    const id = req.params.id;
+    return this.eventsService.update(id, dto);
+  }
+
+  @Put(':id/status')
+  @UseGuards(JwtAuthGuard)
+
+  updateStatus(@Req() req, @Body('status') status: string) {
+    const id = req.params.id;
+    return this.eventsService.updateStatus(id, status);
+  }
 
 
 }

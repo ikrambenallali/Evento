@@ -43,7 +43,16 @@ export default function EditEventPage() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    await updateEvent(id, form, token);
+
+    const payload = {
+      title: form.title,
+      description: form.description,
+      date: form.date,
+      location: form.location,
+      capacity: Number(form.capacity),
+    };
+
+    await updateEvent(id, payload, token);
     router.push('/admin/events');
   };
 
@@ -182,7 +191,7 @@ export default function EditEventPage() {
                           type="number"
                           placeholder="Nombre de places"
                           value={form.capacity || ''}
-                          onChange={e => setForm({ ...form, capacity: e.target.value })}
+                          onChange={e => setForm({ ...form, capacity: Number(e.target.value) })}
                           required
                           min="1"
                           className="w-full px-4 py-3 bg-amber-950/50 border border-orange-200/30 rounded-lg text-orange-100 placeholder-orange-100/40 focus:outline-none focus:border-orange-200/60 focus:ring-2 focus:ring-orange-200/20 transition-all"
