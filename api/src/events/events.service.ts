@@ -8,9 +8,9 @@ export class EventsService {
   constructor(
     @InjectModel(Event.name)
     private readonly eventModel: Model<EventDocument>,
-  ) {}
+  ) { }
 
- async create(dto: any, userId: string) {
+  async create(dto: any, userId: string) {
     // ✅ Validation explicite du userId
     if (!userId) {
       console.error('❌ userId est undefined ou null');
@@ -34,18 +34,18 @@ export class EventsService {
     return this.eventModel.findById(id).exec();
   }
   async findById(id: string) {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new BadRequestException('Invalid event id');
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('Invalid event id');
+    }
+
+    const event = await this.eventModel.findById(id);
+
+    if (!event) {
+      throw new NotFoundException('Event not found');
+    }
+
+    return event;
   }
-
-  const event = await this.eventModel.findById(id);
-
-  if (!event) {
-    throw new NotFoundException('Event not found');
-  }
-
-  return event;
-}
 
   async remove(id: string) {
     return this.eventModel.findByIdAndDelete(id).exec();
@@ -60,7 +60,7 @@ export class EventsService {
       .exec();
   }
 
- async getAllEventsPublished() {
+  async getAllEventsPublished() {
     return this.eventModel.find({ status: 'PUBLISHED' }).exec();
   }
 }

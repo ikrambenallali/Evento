@@ -15,19 +15,19 @@ export default function ProtectedRoute({
   allowedRoles = ['ADMIN', 'PARTICIPANT'], // par défaut tout le monde peut accéder
 }: ProtectedRouteProps) {
   const router = useRouter();
-  const { user, loading } = useSelector((state: RootState) => state.auth);
-
+  const { user, loading, initialized } = useSelector((state: RootState) => state.auth);
   useEffect(() => {
+    if (!initialized) return;
     if (!loading) {
       if (!user) {
         // Utilisateur non connecté
         router.replace('/login');
-      } else if (!allowedRoles.includes(user.role)) {
+      } else if (!allowedRoles.includes(user.role as 'ADMIN' | 'PARTICIPANT')) {
         // Utilisateur connecté mais rôle non autorisé
         router.replace('/events'); // Redirection générique pour rôle non autorisé
       }
     }
-  }, [user, loading, allowedRoles, router]);
+  }, [user, loading, initialized, allowedRoles, router]);
 
   if (loading) {
     return (
@@ -37,7 +37,7 @@ export default function ProtectedRoute({
     );
   }
 
-  if (!user || !allowedRoles.includes(user.role)) return null;
+  if (!user || !allowedRoles.includes(user.role as 'ADMIN' | 'PARTICIPANT')) return null;
 
   return <>{children}</>;
 }

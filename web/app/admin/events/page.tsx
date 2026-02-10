@@ -26,7 +26,6 @@ const cinzel = Cinzel({
 
 export default function AdminEventsPage() {
     const token = useSelector((state: any) => state.auth.token);
-    console.log('TOKEN:', token);
 
     const router = useRouter();
     const [events, setEvents] = useState<IEvent[]>([]);
@@ -55,7 +54,7 @@ export default function AdminEventsPage() {
 
             <div className="relative min-h-screen w-full overflow-hidden " >
                 {/* Background avec dégradé inspiré du palais */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-amber-900 to-orange-950">
+                <div className="absolute inset-0 bg-linear-to-br from-amber-950 via-amber-900 to-orange-950">
                     {/* Motifs décoratifs subtils */}
                     <div className="absolute inset-0 opacity-10">
                         <div className="absolute top-0 left-0 w-96 h-96 bg-orange-300 rounded-full blur-3xl"></div>
@@ -90,9 +89,20 @@ export default function AdminEventsPage() {
 
                     {/* Events Table */}
                     <main className="container mx-auto px-4 py-8">
+                        {/* Bouton Créer un événement - À l'extérieur du tableau */}
+                        <div className="mb-6 flex justify-end">
+                            <button
+                                onClick={() => router.push('/admin/events/create')}
+                                className={`px-6 py-3 bg-linear-to-r from-amber-800/60 to-orange-800/60 text-orange-100 border-2 border-orange-200/40 rounded-lg hover:from-amber-700/70 hover:to-orange-700/70 hover:border-orange-200/60 transition-all shadow-lg hover:shadow-xl text-sm ${cinzel.className}`}
+                                style={{ letterSpacing: '0.08em' }}
+                            >
+                                + CRÉER UN ÉVÉNEMENT
+                            </button>
+                        </div>
+
                         {events.length === 0 ? (
                             <div className="text-center py-12">
-                                <div className="bg-gradient-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-xl p-8 max-w-md mx-auto">
+                                <div className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-xl p-8 max-w-md mx-auto">
                                     <svg
                                         className="w-12 h-12 text-orange-200/50 mx-auto mb-3"
                                         fill="none"
@@ -115,7 +125,7 @@ export default function AdminEventsPage() {
                                 </div>
                             </div>
                         ) : (
-                            <div className="bg-gradient-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-2xl overflow-hidden">
+                            <div className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-2xl overflow-hidden">
                                 <div className="overflow-x-auto">
                                     <table className="w-full">
                                         <thead>
@@ -140,46 +150,41 @@ export default function AdminEventsPage() {
                                                     <td className="px-6 py-4 text-orange-100/80">{e.capacity}</td>
                                                     <td className="px-6 py-4">
                                                         <span className={`inline-block px-3 py-1 rounded-full text-xs ${cinzel.className} ${e.status === EventStatus.PUBLISHED
-                                                                ? 'bg-green-900/40 text-green-200 border border-green-200/30'
-                                                                : e.status === EventStatus.CANCELED
-                                                                    ? 'bg-red-900/40 text-red-200 border border-red-200/30'
-                                                                    : 'bg-amber-900/40 text-amber-200 border border-amber-200/30'
+                                                            ? 'bg-amber-700/50 text-amber-100 border border-amber-200/40'
+                                                            : e.status === EventStatus.CANCELED
+                                                                ? 'bg-orange-900/50 text-orange-100 border border-orange-200/40'
+                                                                : 'bg-amber-900/40 text-amber-200 border border-amber-200/30'
                                                             }`}>
                                                             {e.status}
                                                         </span>
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <div className="flex gap-2">
+                                                        <div className="flex gap-2 flex-wrap">
                                                             <button
-                                                                onClick={() => router.push('/admin/events/create')}
-                                                                className={`px-3 py-1.5 bg-blue-900/40 text-blue-200 border border-blue-200/30 rounded-lg hover:bg-blue-900/60 transition-colors text-xs ${cinzel.className}`}
-                                                            >
-                                                                + Créer un événement
-                                                            </button>
-                                                             <button
                                                                 onClick={() => router.push(`/admin/events/${e._id}/edit`)}
-                                                                className={`px-3 py-1.5 bg-blue-900/40 text-blue-200 border border-blue-200/30 rounded-lg hover:bg-blue-900/60 transition-colors text-xs ${cinzel.className}`}
+                                                                className={`px-3 py-1.5 bg-linear-to-r from-amber-800/50 to-orange-700/50 text-orange-100 border border-orange-200/30 rounded-lg hover:from-amber-700/60 hover:to-orange-600/60 hover:border-orange-200/50 transition-all text-xs ${cinzel.className}`}
+                                                                style={{ letterSpacing: '0.05em' }}
                                                             >
-                                                                + Modifier l'événement
+                                                                Modifier
                                                             </button>
 
                                                             <button
                                                                 onClick={() => handleStatus(e._id, EventStatus.PUBLISHED)}
-                                                                className={`px-3 py-1.5 bg-green-900/40 text-green-200 border border-green-200/30 rounded-lg hover:bg-green-900/60 transition-colors text-xs ${cinzel.className}`}
+                                                                className={`px-3 py-1.5 bg-linear-to-r from-amber-700/50 to-amber-600/50 text-amber-100 border border-amber-200/40 rounded-lg hover:from-amber-600/60 hover:to-amber-500/60 hover:border-amber-200/60 transition-all text-xs ${cinzel.className}`}
                                                                 style={{ letterSpacing: '0.05em' }}
                                                             >
                                                                 Publier
                                                             </button>
                                                             <button
                                                                 onClick={() => handleStatus(e._id, EventStatus.CANCELED)}
-                                                                className={`px-3 py-1.5 bg-orange-900/40 text-orange-200 border border-orange-200/30 rounded-lg hover:bg-orange-900/60 transition-colors text-xs ${cinzel.className}`}
+                                                                className={`px-3 py-1.5 bg-linear-to-r from-orange-800/50 to-orange-700/50 text-orange-100 border border-orange-200/40 rounded-lg hover:from-orange-700/60 hover:to-orange-600/60 hover:border-orange-200/60 transition-all text-xs ${cinzel.className}`}
                                                                 style={{ letterSpacing: '0.05em' }}
                                                             >
                                                                 Annuler
                                                             </button>
                                                             <button
                                                                 onClick={() => handleDelete(e._id)}
-                                                                className={`px-3 py-1.5 bg-red-900/40 text-red-200 border border-red-200/30 rounded-lg hover:bg-red-900/60 transition-colors text-xs ${cinzel.className}`}
+                                                                className={`px-3 py-1.5 bg-linear-to-r from-amber-950/60 to-orange-950/60 text-orange-100 border border-orange-200/40 rounded-lg hover:from-amber-900/70 hover:to-orange-900/70 hover:border-orange-200/60 transition-all text-xs ${cinzel.className}`}
                                                                 style={{ letterSpacing: '0.05em' }}
                                                             >
                                                                 Supprimer

@@ -47,16 +47,16 @@ export default function CreateEventPage() {
 
   return (
     <>
-    
+
       <div className="relative min-h-screen w-full overflow-hidden">
         {/* Background avec dégradé inspiré du palais */}
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-amber-900 to-orange-950">
+        <div className="absolute inset-0 bg-linear-to-br from-amber-950 via-amber-900 to-orange-950">
           {/* Motifs décoratifs subtils */}
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 left-0 w-96 h-96 bg-orange-300 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-400 rounded-full blur-3xl"></div>
           </div>
-          
+
           {/* Texture overlay */}
           <div className="absolute inset-0 bg-black/20"></div>
         </div>
@@ -86,11 +86,11 @@ export default function CreateEventPage() {
           {/* Form Section */}
           <main className="container mx-auto px-4 py-8">
             <div className="max-w-2xl mx-auto">
-              <div className="bg-gradient-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-2xl p-8">
+              <div className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-2xl p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Titre */}
                   <div>
-                    <label 
+                    <label
                       className={`block text-orange-100 text-sm mb-2 ${cinzel.className}`}
                       style={{ letterSpacing: '0.1em' }}
                     >
@@ -100,7 +100,7 @@ export default function CreateEventPage() {
                       type="text"
                       placeholder="Nom de l'événement"
                       value={form.title}
-                      onChange={e => setForm({...form, title: e.target.value})}
+                      onChange={e => setForm({ ...form, title: e.target.value })}
                       required
                       className="w-full px-4 py-3 bg-amber-950/50 border border-orange-200/30 rounded-lg text-orange-100 placeholder-orange-100/40 focus:outline-none focus:border-orange-200/60 focus:ring-2 focus:ring-orange-200/20 transition-all"
                     />
@@ -108,7 +108,7 @@ export default function CreateEventPage() {
 
                   {/* Description */}
                   <div>
-                    <label 
+                    <label
                       className={`block text-orange-100 text-sm mb-2 ${cinzel.className}`}
                       style={{ letterSpacing: '0.1em' }}
                     >
@@ -117,7 +117,7 @@ export default function CreateEventPage() {
                     <textarea
                       placeholder="Description de l'événement"
                       value={form.description}
-                      onChange={e => setForm({...form, description: e.target.value})}
+                      onChange={e => setForm({ ...form, description: e.target.value })}
                       required
                       rows={4}
                       className="w-full px-4 py-3 bg-amber-950/50 border border-orange-200/30 rounded-lg text-orange-100 placeholder-orange-100/40 focus:outline-none focus:border-orange-200/60 focus:ring-2 focus:ring-orange-200/20 transition-all resize-none"
@@ -128,7 +128,7 @@ export default function CreateEventPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Date */}
                     <div>
-                      <label 
+                      <label
                         className={`block text-orange-100 text-sm mb-2 ${cinzel.className}`}
                         style={{ letterSpacing: '0.1em' }}
                       >
@@ -137,7 +137,7 @@ export default function CreateEventPage() {
                       <input
                         type="date"
                         value={form.date}
-                        onChange={e => setForm({...form, date: e.target.value})}
+                        onChange={e => setForm({ ...form, date: e.target.value })}
                         required
                         className="w-full px-4 py-3 bg-amber-950/50 border border-orange-200/30 rounded-lg text-orange-100 focus:outline-none focus:border-orange-200/60 focus:ring-2 focus:ring-orange-200/20 transition-all"
                       />
@@ -145,7 +145,7 @@ export default function CreateEventPage() {
 
                     {/* Capacité */}
                     <div>
-                      <label 
+                      <label
                         className={`block text-orange-100 text-sm mb-2 ${cinzel.className}`}
                         style={{ letterSpacing: '0.1em' }}
                       >
@@ -155,7 +155,7 @@ export default function CreateEventPage() {
                         type="number"
                         placeholder="Nombre de places"
                         value={form.capacity}
-                        onChange={e => setForm({...form, capacity: e.target.value})}
+                        onChange={e => setForm({ ...form, capacity: e.target.value })}
                         required
                         min="1"
                         className="w-full px-4 py-3 bg-amber-950/50 border border-orange-200/30 rounded-lg text-orange-100 placeholder-orange-100/40 focus:outline-none focus:border-orange-200/60 focus:ring-2 focus:ring-orange-200/20 transition-all"
@@ -165,7 +165,7 @@ export default function CreateEventPage() {
 
                   {/* Lieu */}
                   <div>
-                    <label 
+                    <label
                       className={`block text-orange-100 text-sm mb-2 ${cinzel.className}`}
                       style={{ letterSpacing: '0.1em' }}
                     >
@@ -175,7 +175,7 @@ export default function CreateEventPage() {
                       type="text"
                       placeholder="Adresse de l'événement"
                       value={form.location}
-                      onChange={e => setForm({...form, location: e.target.value})}
+                      onChange={e => setForm({ ...form, location: e.target.value })}
                       required
                       className="w-full px-4 py-3 bg-amber-950/50 border border-orange-200/30 rounded-lg text-orange-100 placeholder-orange-100/40 focus:outline-none focus:border-orange-200/60 focus:ring-2 focus:ring-orange-200/20 transition-all"
                     />
@@ -183,7 +183,7 @@ export default function CreateEventPage() {
 
                   {/* Photo */}
                   <div>
-                    <label 
+                    <label
                       className={`block text-orange-100 text-sm mb-2 ${cinzel.className}`}
                       style={{ letterSpacing: '0.1em' }}
                     >
@@ -218,7 +218,7 @@ export default function CreateEventPage() {
                   <div className="flex gap-4 pt-4">
                     <button
                       type="submit"
-                      className={`flex-1 px-6 py-3 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-semibold rounded-lg hover:from-orange-500 hover:to-amber-500 focus:outline-none focus:ring-2 focus:ring-orange-200/50 transition-all shadow-lg hover:shadow-xl ${cinzel.className}`}
+                      className={`flex-1 px-6 py-3 bg-linear-to-r from-orange-600 to-amber-600 text-white font-semibold rounded-lg hover:from-orange-500 hover:to-amber-500 focus:outline-none focus:ring-2 focus:ring-orange-200/50 transition-all shadow-lg hover:shadow-xl ${cinzel.className}`}
                       style={{ letterSpacing: '0.1em' }}
                     >
                       CRÉER L'ÉVÉNEMENT

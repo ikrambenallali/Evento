@@ -66,7 +66,7 @@ export default function AdminReservationsPage() {
 
             <div className="relative min-h-screen w-full overflow-hidden ">
                 {/* Background avec dégradé inspiré du palais */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-amber-900 to-orange-950">
+                <div className="absolute inset-0 bg-linear-to-br from-amber-950 via-amber-900 to-orange-950">
                     {/* Motifs décoratifs subtils */}
                     <div className="absolute inset-0 opacity-10">
                         <div className="absolute top-0 left-0 w-96 h-96 bg-orange-300 rounded-full blur-3xl"></div>
@@ -103,7 +103,7 @@ export default function AdminReservationsPage() {
                     <main className="container mx-auto px-4 py-8">
                         {loading ? (
                             <div className="text-center py-12">
-                                <div className="bg-gradient-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-xl p-8 max-w-md mx-auto">
+                                <div className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-xl p-8 max-w-md mx-auto">
                                     <div className="w-12 h-12 border-4 border-orange-200/30 border-t-orange-200 rounded-full animate-spin mx-auto mb-3"></div>
                                     <p
                                         className={`text-orange-100/80 ${cinzel.className}`}
@@ -115,7 +115,7 @@ export default function AdminReservationsPage() {
                             </div>
                         ) : reservations.length === 0 ? (
                             <div className="text-center py-12">
-                                <div className="bg-gradient-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-xl p-8 max-w-md mx-auto">
+                                <div className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-xl p-8 max-w-md mx-auto">
                                     <svg
                                         className="w-12 h-12 text-orange-200/50 mx-auto mb-3"
                                         fill="none"
@@ -138,7 +138,7 @@ export default function AdminReservationsPage() {
                                 </div>
                             </div>
                         ) : (
-                            <div className="bg-gradient-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-2xl overflow-hidden">
+                            <div className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-2xl overflow-hidden">
                                 <div className="overflow-x-auto">
                                     <table className="w-full">
                                         <thead>
