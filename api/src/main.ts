@@ -9,7 +9,8 @@ async function bootstrap() {
     origin: true,
     credentials: true,
   });
-  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+
+  app.useStaticAssets(join(process.cwd(), 'uploads'), {
     prefix: '/uploads',
   });
 
