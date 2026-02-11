@@ -89,6 +89,7 @@ export default async function EventsPage() {
 
           {/* Events Grid - Plus compact */}
           <main className="container mx-auto px-4 py-8">
+
             {events.length === 0 ? (
               <div className="text-center py-12">
                 <div className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-xl p-8 max-w-md mx-auto">

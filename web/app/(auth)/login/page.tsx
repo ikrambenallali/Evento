@@ -24,7 +24,6 @@ const cinzel = Cinzel({
     weight: ['400', '500', '600', '700'],
     display: 'swap',
 });
-console.log("api url : ", process.env.NEXT_PUBLIC_API_URL);
 
 export default function LoginPage() {
     const dispatch = useDispatch();
@@ -63,7 +62,6 @@ export default function LoginPage() {
 
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
-            console.log('token apres login :', token);
             router.push('/events');
         } catch (err: any) {
             dispatch(

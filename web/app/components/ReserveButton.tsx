@@ -52,10 +52,9 @@ export default function ReserveButton({ eventId }: Props) {
 
       setSuccess(true);
       
-      // Redirection après un court délai pour afficher le message de succès
       setTimeout(() => {
         router.push('/my-reservations');
-      }, 1500);
+      }, 1000);
     } catch (err: any) {
       setError(err.message);
     } finally {

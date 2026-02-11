@@ -57,7 +57,6 @@ export default function EditEventPage() {
       router.push('/admin/events');
     } catch (err: any) {
       console.error('Update failed', err.response?.data || err.message || err);
-      // rethrow so calling code / UI still sees the error if needed
       throw err;
     }
   };

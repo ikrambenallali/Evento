@@ -11,14 +11,10 @@ export class EventsService {
   ) { }
 
   async create(dto: any, userId: string) {
-    // ✅ Validation explicite du userId
     if (!userId) {
-      console.error('❌ userId est undefined ou null');
+      console.error('userId est undefined ou null');
       throw new BadRequestException('User ID is required but was not provided');
     }
-
-    console.log('✅ Creating event with userId:', userId);
-
     const event = new this.eventModel({
       ...dto,
       createdBy: userId,
@@ -30,9 +26,11 @@ export class EventsService {
   async findAll() {
     return this.eventModel.find().exec();
   }
+
   async eventDetails(id: string) {
     return this.eventModel.findById(id).exec();
   }
+
   async findById(id: string) {
     if (!Types.ObjectId.isValid(id)) {
       throw new BadRequestException('Invalid event id');
@@ -50,6 +48,7 @@ export class EventsService {
   async remove(id: string) {
     return this.eventModel.findByIdAndDelete(id).exec();
   }
+  
   async update(id: string, dto: any) {
     return this.eventModel.findByIdAndUpdate(id, dto, { new: true }).exec();
   }

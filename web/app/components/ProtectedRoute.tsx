@@ -12,7 +12,7 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({
   children,
-  allowedRoles = ['ADMIN', 'PARTICIPANT'], // par défaut tout le monde peut accéder
+  allowedRoles = ['ADMIN', 'PARTICIPANT'], 
 }: ProtectedRouteProps) {
   const router = useRouter();
   const { user, loading, initialized } = useSelector((state: RootState) => state.auth);
@@ -24,7 +24,7 @@ export default function ProtectedRoute({
         router.replace('/login');
       } else if (!allowedRoles.includes(user.role as 'ADMIN' | 'PARTICIPANT')) {
         // Utilisateur connecté mais rôle non autorisé
-        router.replace('/events'); // Redirection générique pour rôle non autorisé
+        router.replace('/events');
       }
     }
   }, [user, loading, initialized, allowedRoles, router]);

@@ -6,7 +6,7 @@ import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('tickets')
-@UseGuards(JwtAuthGuard)  // <<< important
+@UseGuards(JwtAuthGuard) 
 export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
