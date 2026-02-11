@@ -28,7 +28,6 @@ const cinzel = Cinzel({
 
 export default function AdminReservationsPage() {
     const token = useSelector((state: any) => state.auth.token);
-    console.log('AdminReservationsPage - Token:', token);
     const [reservations, setReservations] = useState<Reservation[]>([]);
     const [loading, setLoading] = useState(true);
 

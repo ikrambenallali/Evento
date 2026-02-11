@@ -1,42 +1,28 @@
-import {
-  Controller,
-  Post,
-  Body,
-  UseInterceptors,
-  UploadedFile,
-  Req,
-  Get,
-  Delete,
-  Put,
-} from '@nestjs/common';
+import {Controller,Post,Body,UseInterceptors,UploadedFile,Req,Get,Delete,Put,} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { eventImageStorage } from './multer.config';
-
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../auth/decorators/user.decorator';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/common/enums/role.enum';
 
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) { }
 
-  @Get('me-test')
-  test(@Req() req) {
-    console.log('👤 User dans request:', req.user); // Debug
-    return req.user;
-  }
-
   @Post()
-  @UseGuards(JwtAuthGuard)
-
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Roles(Role.ADMIN)  
   @UseInterceptors(FileInterceptor('photo', { storage: eventImageStorage }))
   create(
     @UploadedFile() file: Express.Multer.File,
     @Body() dto: CreateEventDto,
-    @User('id') userId: string, // récupère l'id depuis le decorator
+    @User('id') userId: string, 
   ) {
     const photoUrl = file ? `/uploads/events/${file.filename}` : undefined;
     return this.eventsService.create({ ...dto, photoUrl }, userId);
@@ -47,11 +33,12 @@ export class EventsController {
   findAll() {
     return this.eventsService.findAll();
   }
-  @Get('published')
 
+  @Get('published')
   getAllEventsPublished() {
     return this.eventsService.getAllEventsPublished();
   }
+
   @Get(':id/details')
   eventDetails(@Req() req) {
     const id = req.params.id;
@@ -66,16 +53,16 @@ export class EventsController {
 
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
-
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Roles(Role.ADMIN)  
   remove(@Req() req) {
     const id = req.params.id;
     return this.eventsService.remove(id);
   }
 
   @Put(':id')
-  @UseGuards(JwtAuthGuard)
-
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Roles(Role.ADMIN)  
   update(@Req() req, @Body() dto: UpdateEventDto) {
     const id = req.params.id;
     return this.eventsService.update(id, dto);
@@ -83,7 +70,6 @@ export class EventsController {
 
   @Put(':id/status')
   @UseGuards(JwtAuthGuard)
-
   updateStatus(@Req() req, @Body('status') status: string) {
     const id = req.params.id;
     return this.eventsService.updateStatus(id, status);

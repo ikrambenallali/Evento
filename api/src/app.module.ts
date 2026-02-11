@@ -27,7 +27,7 @@ import { ReservationsModule } from './reservations/reservations.module';
     TicketsModule,
     ReservationsModule,
   ],
-  controllers: [AppController], // ✅ UNIQUEMENT
-  providers: [AppService],       // ✅ UNIQUEMENT
+  controllers: [AppController],
+  providers: [AppService],       
 })
 export class AppModule { }

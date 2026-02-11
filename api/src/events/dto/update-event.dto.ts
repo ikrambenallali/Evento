@@ -12,7 +12,7 @@ export class UpdateEventDto {
 
   @IsOptional()
   @IsDateString()
-  date?: Date;
+  date?: string;
 
   @IsOptional()
   @IsString()

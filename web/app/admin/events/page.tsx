@@ -127,6 +127,7 @@ export default function AdminEventsPage() {
                         ) : (
                             <div className="bg-linear-to-b from-amber-900/40 to-amber-950/40 backdrop-blur-xl border-2 border-orange-200/30 rounded-xl shadow-2xl overflow-hidden">
                                 <div className="overflow-x-auto">
+
                                     <table className="w-full">
                                         <thead>
                                             <tr className="border-b border-orange-200/20">
@@ -139,6 +140,7 @@ export default function AdminEventsPage() {
                                             </tr>
                                         </thead>
                                         <tbody>
+
                                             {events.map((e: IEvent) => (
                                                 <tr
                                                     key={e._id}

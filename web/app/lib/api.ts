@@ -3,9 +3,7 @@ import api from './axios';
 import { IEvent } from '../types/event';
 import { ReservationStatus } from '@/app/types/ReservationStatus';
 
-/* =======================
-   EVENTS - PUBLIC
-======================= */
+
 
 // Événements publiés
 export const getPublishedEvents = async (): Promise<IEvent[]> => {
@@ -26,9 +24,7 @@ export const getEventById = async (id: string) => {
   }
 };
 
-/* =======================
-   EVENTS - ADMIN
-======================= */
+ 
 
 export const getAllEventsAdmin = async (token: string): Promise<IEvent[]> => {
   const res = await api.get('/events', {
@@ -101,9 +97,7 @@ export const deleteEvent = async (id: string, token: string) => {
   });
 };
 
-/* =======================
-   RESERVATIONS - PARTICIPANT
-======================= */
+
 
 export const createReservation = async (
   eventId: string,
@@ -146,9 +140,7 @@ export const cancelReservation = async (
   return res.data;
 };
 
-/* =======================
-   RESERVATIONS - ADMIN
-======================= */
+
 
 export const getAllReservations = async (token: string) => {
   const res = await api.get('/reservations', {
@@ -177,4 +169,3 @@ export const updateReservationStatus = async (
 };
 
 
-// 🔹 Mes réservations (PARTICIPANT)

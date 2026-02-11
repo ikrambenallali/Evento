@@ -31,7 +31,7 @@ export class TicketsService {
   if (user.role !== 'ADMIN' && reservation.user._id.toString() !== user.id)
     throw new ForbiddenException('Accès interdit');
 
-  return this.generatePdf(reservation);  // ← retourne la Promise
+  return this.generatePdf(reservation);  
 }
 
 
@@ -44,7 +44,7 @@ export class TicketsService {
     doc.on('end', () => resolve(Buffer.concat(buffers)));
     doc.on('error', (err) => reject(err));
 
-    doc.fontSize(18).text('🎫 Ticket de réservation');
+    doc.fontSize(18).text('Ticket de réservation');
     doc.moveDown();
 
     doc.text(`Participant: ${reservation.user.name}`);

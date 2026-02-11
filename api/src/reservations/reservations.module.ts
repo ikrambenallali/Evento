@@ -10,7 +10,7 @@ import { EventsModule } from '../events/events.module';
     MongooseModule.forFeature([
       { name: Reservation.name, schema: ReservationSchema },
     ]),
-    EventsModule, // 🔥 OBLIGATOIRE
+    EventsModule,
   ],
   controllers: [ReservationsController],
   providers: [ReservationsService],

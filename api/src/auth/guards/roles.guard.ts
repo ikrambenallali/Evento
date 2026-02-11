@@ -1,7 +1,4 @@
-// ****Role****
-// =============================================================================================================================
-// Vérifie que request.user.role correspond aux rôles autorisés définis via @Roles(). Si non → 403 Forbidden.
-// =============================================================================================================================
+
 import {
   CanActivate,
   ExecutionContext,
@@ -21,7 +18,6 @@ export class RolesGuard implements CanActivate {
       [context.getHandler(), context.getClass()],
     );
 
-    // Si aucun rôle requis → accès autorisé
     if (!requiredRoles) {
       return true;
     }
@@ -36,7 +32,3 @@ export class RolesGuard implements CanActivate {
     return requiredRoles.includes(user.role);
   }
 }
-// *****utilise*****
-// =============================================================================================================================
-// Routes avec accès restreint par rôle (Admin / Participant).
-// =============================================================================================================================

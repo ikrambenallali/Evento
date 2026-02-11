@@ -52,8 +52,13 @@ export default function EditEventPage() {
       capacity: Number(form.capacity),
     };
 
-    await updateEvent(id, payload, token);
-    router.push('/admin/events');
+    try {
+      await updateEvent(id, payload, token);
+      router.push('/admin/events');
+    } catch (err: any) {
+      console.error('Update failed', err.response?.data || err.message || err);
+      throw err;
+    }
   };
 
   const handleStatus = async (status: string) => {

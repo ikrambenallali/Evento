@@ -48,7 +48,11 @@ export default function CreateEventPage() {
 
     if (file) {
       const formData = new FormData();
-      formData.append('payload', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+      formData.append('title', payload.title);
+      formData.append('description', payload.description);
+      formData.append('date', payload.date);
+      formData.append('location', payload.location);
+      formData.append('capacity', String(payload.capacity));
       formData.append('photo', file);
       await createEvent(formData, token);
     } else {
